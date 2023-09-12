@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 public class toDay_main_gui extends JFrame{
 	public startP startP = null;
+	public startP selectP = null;
 	public void startframe() {
 		getContentPane().add(startP);
 	}
@@ -38,12 +39,13 @@ public class toDay_main_gui extends JFrame{
 class startP extends JPanel{
 	private JButton btnStart;
 	private JButton  btnchange;
+	
 	private toDay_main_gui main;
 	
 	ImageIcon startbtn1 = new ImageIcon("./Button_Image/start_button_ver.1.png");
 	ImageIcon startbtn1_1 = new ImageIcon("./Button_Image/start_button_check_ver.1.png");
-	ImageIcon startbtn2 = new ImageIcon("./Button_Image/change_theme_ver.1.png");
-	ImageIcon startbtn2_1 = new ImageIcon("./Button_Image/change_theme_check_ver.1.png");
+	ImageIcon changebtn1 = new ImageIcon("./Button_Image/change_theme_ver.1.png");
+	ImageIcon changebtn1_1 = new ImageIcon("./Button_Image/change_theme_check_ver.1.png");
 	
 	public startP(JPanel win) {
 		this.main=main;
@@ -57,13 +59,51 @@ class startP extends JPanel{
 		btnStart.setContentAreaFilled(false);
 		add(btnStart);
 		
-		btnchange = new JButton(startbtn2);
-		btnchange.setRolloverIcon(startbtn2_1);
+		btnchange = new JButton(changebtn1);
+		btnchange.setRolloverIcon(changebtn1_1);
 		btnchange.setBorderPainted(false);
 		btnchange.setSize(130, 57);
 		btnchange.setLocation(670, 515);
 		btnchange.setContentAreaFilled(false);
 		add(btnchange);
 		
+		btnStart.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				
+			}
+		});
 	}
 }
+ class selectP1 extends JPanel{
+	 private toDay_main_gui main;
+	 private JButton korean;
+	 private JButton western;
+	 private JButton chinese;
+	 private JButton japanese;
+	 
+	 
+ }
+ class selectP2 extends JPanel{
+	 private toDay_main_gui main;
+	 private JButton rice;
+	 private JButton bread;
+	 private JButton noodle;
+	 
+	 
+ }
+ class selectP3 extends JPanel{
+	 private toDay_main_gui main;
+	 private JButton hot;
+	 private JButton cold;	 
+	 
+ }
+ class result extends JPanel{
+	 private toDay_main_gui main;
+	 private JButton add;
+	 
+ }
+ 
