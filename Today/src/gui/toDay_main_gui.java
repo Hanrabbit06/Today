@@ -144,12 +144,12 @@ class selectP1 extends JPanel {
 	 private JButton bread;
 	 private JButton noodle;
 	 
-	 ImageIcon btn1_1 = new ImageIcon("./Button_Image/btn1_1.png");
-	    ImageIcon btn1_1_1 = new ImageIcon("./Button_Image/btn1_1_1.png");
-	    ImageIcon btn1_2 = new ImageIcon("./Button_Image/btn1_2.png");
-	    ImageIcon btn1_2_1 = new ImageIcon("./Button_Image/btn1_2_1.png");
-	    ImageIcon btn1_3 = new ImageIcon("./Button_Image/btn1_3.png");
-	    ImageIcon btn1_3_1 = new ImageIcon("./Button_Image/btn1_3_1.png");
+	 ImageIcon btn1_1 = new ImageIcon("./Button_Image/btn2_1.png");
+	    ImageIcon btn1_1_1 = new ImageIcon("./Button_Image/btn2_1_1.png");
+	    ImageIcon btn1_2 = new ImageIcon("./Button_Image/btn2_2.png");
+	    ImageIcon btn1_2_1 = new ImageIcon("./Button_Image/btn2_2_1.png");
+	    ImageIcon btn1_3 = new ImageIcon("./Button_Image/btn2_3.png");
+	    ImageIcon btn1_3_1 = new ImageIcon("./Button_Image/btn2_3_1.png");
 	 
 	 public selectP2(toDay_main_gui main) {
 	        this.main = main;
@@ -189,10 +189,10 @@ class selectP1 extends JPanel {
 	 private JButton hot;
 	 private JButton cold;	 
 	 
-	 ImageIcon btn1_1 = new ImageIcon("./Button_Image/btn1_1.png");
-	    ImageIcon btn1_1_1 = new ImageIcon("./Button_Image/btn1_1_1.png");
-	    ImageIcon btn1_2 = new ImageIcon("./Button_Image/btn1_2.png");
-	    ImageIcon btn1_2_1 = new ImageIcon("./Button_Image/btn1_2_1.png");
+	 ImageIcon btn1_1 = new ImageIcon("./Button_Image/btn3_1.png");
+	    ImageIcon btn1_1_1 = new ImageIcon("./Button_Image/btn3_1_1.png");
+	    ImageIcon btn1_2 = new ImageIcon("./Button_Image/btn3_2.png");
+	    ImageIcon btn1_2_1 = new ImageIcon("./Button_Image/btn3_2_1.png");
 	 
 	 public selectP3(toDay_main_gui main) {
 	        this.main = main;
