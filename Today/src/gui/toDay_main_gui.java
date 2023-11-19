@@ -397,6 +397,17 @@ class selectP1 extends JPanel {
 		    add.setVisible(true);
 	        add(add);
 	        
+	        add.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                // 추가: SelectP1 패널을 화면에 추가
+	            	setVisible(false);
+	            	main.getContentPane().add(new add(main, category, 2));
+	                main.revalidate();
+	                main.repaint();
+	            }
+	        });
+	        
 	        // 메뉴 이름과 이미지 파일 경로 매핑
 	        menuImages = new HashMap<>();
 	        menuImages.put("국밥", "./foodImage/kukbap.jpg");
@@ -725,6 +736,26 @@ class selectP1 extends JPanel {
 
 	        return recommendedMenu;
 	    }
-	}
+}
+ 
+ class add extends JPanel{
+	 private toDay_main_gui main;
+	 
+	 ImageIcon backgroundImage = new ImageIcon("./back_Image/add_bak.png");
+	 
+	 public add(toDay_main_gui main, int category, int menuType) {
+	        this.main = main;
+	        setLayout(null);
+	        
+	        JLabel backgroundLabel = new JLabel();
+	        backgroundLabel.setIcon(backgroundImage);
+	        backgroundLabel.setSize(840,630);
+	        backgroundLabel.setLocation(0, 0);
+	        add(backgroundLabel);
+
+	        
+	    }
+
+ }
  
  
