@@ -8,13 +8,30 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Random;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import org.jxmapviewer.JXMapViewer;
+import org.jxmapviewer.OSMTileFactoryInfo;
+import org.jxmapviewer.input.CenterMapListener;
+import org.jxmapviewer.input.PanKeyListener;
+import org.jxmapviewer.input.PanMouseInputListener;
+import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
+import org.jxmapviewer.viewer.DefaultTileFactory;
+import org.jxmapviewer.viewer.GeoPosition;
+import org.jxmapviewer.viewer.TileFactoryInfo;
 
 public class toDay_main_gui extends JFrame{
 	public startP startP = null;
@@ -362,19 +379,110 @@ class selectP1 extends JPanel {
 	    private toDay_main_gui main;
 	    private JButton add;
 	    private JLabel resultLabel;
+	    private JLabel imageLabel;
+	    private HashMap<String, String> menuImages;
+	    
+	    ImageIcon btn1_1 = new ImageIcon("./Button_Image/add.png");
+	    
 
 	    public result(toDay_main_gui main, int category, int menuType, int temperature) {
 	        this.main = main;
 	        setLayout(null);
+	        
+	        add  = new JButton(btn1_1);
+		    add.setBorderPainted(false);
+		    add.setSize(130, 50);
+		    add.setLocation(670, 540);
+		    add.setContentAreaFilled(false);
+		    add.setVisible(true);
+	        add(add);
+	        
+	        // 메뉴 이름과 이미지 파일 경로 매핑
+	        menuImages = new HashMap<>();
+	        menuImages.put("국밥", "./foodImage/kukbap.jpg");
+	        menuImages.put("김치찌개", "./foodImage/kimchiguk.jpg");
+	        menuImages.put("된장찌개", "./foodImage/doinjangguk.jpg");
+	        menuImages.put("비빔밥", "./foodImage/bibimbap.jpg");
+	        menuImages.put("찬물에 밥", "./foodImage/waterbap.jpg");
+	        menuImages.put("꽈배기", "./foodImage/gguabagi.jpg");
+	        menuImages.put("찹쌀도넛", "./foodImage/chapssaldonut.jpg");
+	        menuImages.put("찐빵", "./foodImage/zzinbbang.jpg");
+	        menuImages.put("떡볶이", "./foodImage/ddokboggi.jpg");
+	        menuImages.put("호두파이", "./foodImage/hodupie.jpg");
+	        menuImages.put("잔치국수", "./foodImage/janchiguksu.jpg");
+	        menuImages.put("칼국수", "./foodImage/kalguksu.jpg");
+	        menuImages.put("물냉면", "./foodImage/waternangmyun.jpg");
+	        menuImages.put("비빔냉면", "./foodImage/bibimnangmyun.jpg");
+	        
+	        menuImages.put("리소토", "./foodImage/risoto.jpg");
+	        menuImages.put("크림스프", "./foodImage/creamsoup.jpg");
+	        menuImages.put("피자", "./foodImage/pizza.jpg");
+	        menuImages.put("햄버거", "./foodImage/hamburger.jpg");
+	        menuImages.put("파이", "./foodImage/pie.jpg");
+	        menuImages.put("스파게티", "./foodImage/spagetti.jpg");
+	        menuImages.put("라자냐", "./foodImage/lazanya.jpg");
+	        menuImages.put("파스타 샐러드", "./foodImage/pasta salad.jpg");
+	        
+	        menuImages.put("마파두부 덮밥", "./foodImage/mapatofu.jpg");
+	        menuImages.put("짬뽕밥", "./foodImage/jjambbongbab.jpg");
+	        menuImages.put("짜장밥", "./foodImage/jjajangbab.jpg");
+	        menuImages.put("마라탕", "./foodImage/maratang.jpg");
+	        menuImages.put("볶음밥", "./foodImage/bocembab.jpg");
+	        menuImages.put("만두", "./foodImage/mandu.jpg");
+	        menuImages.put("꽃빵", "./foodImage/flowerbread.jpg");
+	        menuImages.put("짜장면", "./foodImage/jjajangmyun.jpg");
+	        menuImages.put("짬뽕", "./foodImage/jjambbong.jpg");
+	        menuImages.put("울면", "./foodImage/woolmyun.jpg");
+	        menuImages.put("중국 냉면", "./foodImage/chinesecoolnoodle.jpg");
+	        menuImages.put("냉짬뽕", "./foodImage/cooljjambbong.jpg");
 
+	        menuImages.put("오야코동", "./foodImage/oyakodong.jpg");
+	        menuImages.put("규동", "./foodImage/gyudong.jpg");
+	        menuImages.put("돈까스", "./foodImage/dongas.jpg");
+	        menuImages.put("오므라이스", "./foodImage/omurice.jpg");
+	        menuImages.put("초밥", "./foodImage/susi.jpg");
+	        menuImages.put("타코야끼", "./foodImage/tacoyagi.jpg");
+	        menuImages.put("오코노미야끼", "./foodImage/oconomeuyagi.jpg");
+	        menuImages.put("당고", "./foodImage/dango.jpg");
+	        menuImages.put("만쥬", "./foodImage/manjyu.jpg");
+	        menuImages.put("우동", "./foodImage/woodong.jpg");
+	        menuImages.put("온소바", "./foodImage/hotsoba.jpg");
+	        menuImages.put("라멘", "./foodImage/ramen.jpg");
+	        menuImages.put("냉소바", "./foodImaege/coolsoba.jpg");
 
-	        resultLabel = new JLabel("추천 메뉴: " + getRecommendedMenu(main, category, menuType, temperature));
+	        resultLabel = new JLabel();
 	        resultLabel.setSize(1000, 50);
-	        resultLabel.setLocation(100, 150);
+	        resultLabel.setLocation(350, 90);
 	        add(resultLabel);
 	        
-	        ImageIcon backgroundImage = new ImageIcon("./back_Image/result_bak.png");
+	        // 이미지 레이블 크기 설정
+	        int imageLabelWidth = 235;
+	        int imageLabelHeight = 250;
+
+	        imageLabel = new JLabel();
+	        imageLabel.setSize(imageLabelWidth, imageLabelHeight);
+	        // 이미지 레이블 위치 설정 (예: 패널 중앙에 위치시키기)
+	        imageLabel.setLocation(574, 255); // 적절한 위치 설정
+	        add(imageLabel);
+
+	        // 추천 메뉴 결정
+	        String recommendedMenu = getRecommendedMenu(main, category, menuType, temperature);
+	        resultLabel.setText("추천 메뉴: " + recommendedMenu);
+
+	        // 메뉴에 맞는 이미지 파일 경로 설정
+	        String imagePath = menuImages.getOrDefault(recommendedMenu, "./foodImage/example.jpg");
 	        
+	        // 이미지 중앙 부분을 잘라내어 표시
+	        try {
+	            BufferedImage originalImage = ImageIO.read(new File(imagePath));
+	            BufferedImage croppedImage = cropImageCenter(originalImage, imageLabelWidth, imageLabelHeight);
+	            imageLabel.setIcon(new ImageIcon(croppedImage));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            // 오류 처리
+	        }
+	        
+	        ImageIcon backgroundImage = new ImageIcon("./back_Image/result_bak.png");
 	        JLabel backgroundLabel = new JLabel();
 	        backgroundLabel.setIcon(backgroundImage);
 	        backgroundLabel.setSize(840,630);
@@ -382,10 +490,67 @@ class selectP1 extends JPanel {
 	        add(backgroundLabel);
 	    }
 	    
+	    private void initMap() {
+	        JXMapViewer mapViewer = new JXMapViewer();
+
+	        // TileFactoryInfo 설정
+	        TileFactoryInfo info = new OSMTileFactoryInfo();
+	        DefaultTileFactory tileFactory = new DefaultTileFactory(info);
+	        mapViewer.setTileFactory(tileFactory);
+
+	        // 초기 위치 설정
+	        GeoPosition initPosition = new GeoPosition(37.5665, 126.9780); // 예시로 서울 시청 좌표 사용
+	        mapViewer.setAddressLocation(initPosition);
+
+	        // 이벤트 리스너 추가
+	        mapViewer.addMouseListener(new CenterMapListener(mapViewer));
+	        mapViewer.addMouseMotionListener(new PanMouseInputListener(mapViewer));
+	        mapViewer.addMouseWheelListener(new ZoomMouseWheelListenerCursor(mapViewer));
+	        mapViewer.addKeyListener(new PanKeyListener(mapViewer));
+
+	        // 지도 크기 및 위치 설정
+	        mapViewer.setSize(542, 332); // 크기 설정
+	        mapViewer.setLocation(15, 247); // 위치 설정
+
+	        this.add(mapViewer);
+	    }
+	    
+	    private BufferedImage cropImageCenter(BufferedImage originalImage, int targetWidth, int targetHeight) {
+	        // 원본 이미지의 비율에 따라 목표 크기 조정
+	        double originalRatio = (double) originalImage.getWidth() / originalImage.getHeight();
+	        double targetRatio = (double) targetWidth / targetHeight;
+	        int newWidth, newHeight;
+
+	        if (originalRatio > targetRatio) {
+	            // 너비 기준으로 조정
+	            newHeight = targetHeight;
+	            newWidth = (int) (originalImage.getWidth() / ((double) originalImage.getHeight() / targetHeight));
+	        } else {
+	            // 높이 기준으로 조정
+	            newWidth = targetWidth;
+	            newHeight = (int) (originalImage.getHeight() / ((double) originalImage.getWidth() / targetWidth));
+	        }
+
+	        // 이미지 재조정
+	        BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+	        Graphics g = resizedImage.createGraphics();
+	        g.drawImage(originalImage, 0, 0, newWidth, newHeight, null);
+	        g.dispose();
+
+	        // 중앙 부분 크롭
+	        int x = (newWidth - targetWidth) / 2;
+	        int y = (newHeight - targetHeight) / 2;
+
+	        return resizedImage.getSubimage(x, y, targetWidth, targetHeight);
+	    }
+	    
 
 	    private String getRecommendedMenu(toDay_main_gui main, int category, int menuType, int temperature) {
 	        Random random = new Random();
 	        String recommendedMenu = "국밥";
+	        
+	        
+	        initMap(); // 지도 초기화 메서드 호출
 	        
 	        
 	        String[] koreanRiceHotMenu = {"국밥", "김치찌개", "된장찌개"};
@@ -397,7 +562,7 @@ class selectP1 extends JPanel {
 	        
 	        String[] westernRiceHotMenu = {"리소토", "크림 스프"};
 	        String[] westernRiceCoolMenu = {"리소토"};
-	        String[] westernBreadHotMenu = {"피자, 햄버거"};
+	        String[] westernBreadHotMenu = {"피자", "햄버거"};
 	        String[] westernBreadCoolMenu = {"파이", "햄버거"};
 	        String[] westernNoodleHotMenu = {"스파게티", "라자냐"};
 	        String[] westernNoodleCoolMenu = {"파스타 샐러드"};
